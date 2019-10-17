@@ -35,6 +35,7 @@ function setTime(){
   }
   //hour
   hour = hour%12;
+  hour = hour * 2;
   outerColor[hour] = "red";
   //minute
   minute = Math.round(minute / 2.5);

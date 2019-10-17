@@ -27,7 +27,8 @@ function drawFace(clock, radius) {
 
 function setTime(){
   var now = new Date();
-  var hour = now.getHours()-now.getTimezoneOffset()/60;
+  var hour = now.getHours() // -now.getTimezoneOffset()/60;
+  // test if getHours() is GMT or not
   var minute = now.getMinutes();
   var second = now.getSeconds();
   for (var i = 0; i < 24; i++) {

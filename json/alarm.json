@@ -1,54 +1,54 @@
 {
     "alarmOn": true,
-    "repeatingAlarms": {
-        "1": {
+    "repeatingAlarms": [
+        {
             "state": true,
             "weekDay": 1,
             "hour": 7,
             "minute": 30,
             "second": 0
         },
-        "2": {
+        {
             "state": false,
             "weekDay": 2,
             "hour": 7,
             "minute": 0,
             "second": 0
         },
-        "3": {
+        {
             "state": false,
             "weekDay": 3,
             "hour": 7,
             "minute": 0,
             "second": 0
         },
-        "4": {
+        {
             "state": false,
             "weekDay": 4,
             "hour": 7,
             "minute": 0,
             "second": 0
         },
-        "5": {
+        {
             "state": false,
             "weekDay": 5,
             "hour": 7,
             "minute": 0,
             "second": 0
         },
-        "6": {
+        {
             "state": false,
             "weekDay": 6,
             "hour": 7,
             "minute": 0,
             "second": 0
         },
-        "7": {
+        {
             "state": false,
             "weekDay": 7,
             "hour": 7,
             "minute": 30,
             "second": 0
         }
-    }
+    ]
 }

@@ -4,15 +4,6 @@ h1 {
     padding: 20px;
 }
 
-.card {
-    margin-bottom: 10px;
-}
-
-.square-btn {
-    width: 25px;
-    height: 25px;
-}
-
 th {
     text-align: center;
 }
@@ -21,7 +12,30 @@ td {
     text-align: center;
 }
 
+.card {
+    margin-bottom: 10px;
+}
+
+.card-header {
+    color: white;
+    border-bottom: 0px;
+}
+
+.square-btn {
+    width: 25px;
+    height: 25px;
+}
+
+.gray-background {
+    background-image: linear-gradient(#343A40, #6C757D);
+}
+
+.blue-background {
+    background-image: linear-gradient(#0c5a66, #17A2B8);
+}
+
 #analog-clock {
     width: 100%;
     height: 100%;
 }
+

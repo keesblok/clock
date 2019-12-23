@@ -37,37 +37,51 @@ function drawInnerRing(clock, radius) {
     }
 }
 
-function loadJson() {
+function CreateTableFromJSON() {
+    var repeatingAlarms;
+
     var xmlhttp = new XMLHttpRequest();
-    var txt = "";
     xmlhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-        var alarmJson = JSON.parse(this.responseText);
-        document.getElementById("card3-content").innerHTML = alarmJson.alarmOn;
-        txt += '<table class="table"><thead class="thead-dark">'
-            +  '<tr class="align-middle">'
-            +  '<th>State</th>'
-            +  '<th>Weekday</th>'
-            +  '<th>Hour</th>'
-            +  '<th>Minute</th>'
-            +  '<th>Second</th>'
-            +  '</tr></thead>'
-            +  '<tbody>'
-        for (x in alarmJson.repeatingAlarms) {
-            txt += '<tr><td><button type="button" class="btn btn-outline-secondary square-btn '
-                    + (alarmJson.repeatingAlarms[x].state ? 'active' : '') 
-                    + '" data-toggle="button" aria-pressed="'
-                    + alarmJson.repeatingAlarms[x].state
-                    + '" autocomplete="off"></td><td>'
-                    + alarmJson.repeatingAlarms[x].weekDay + "</td><td>"
-                    + alarmJson.repeatingAlarms[x].hour + "</td><td>"
-                    + alarmJson.repeatingAlarms[x].minute + "</td><td>"
-                    + alarmJson.repeatingAlarms[x].second + "</td></tr>";
-        }  
-        txt += '</tbody></table>' 
-        document.getElementById("alarmTable").innerHTML = txt;
+        if (this.readyState == 4 && this.status == 200) {
+            alarms = JSON.parse(this.responseText);
+            repeatingAlarms = alarms["repeatingAlarms"];
+
+            var col = [];
+            for (var i = 0; i < repeatingAlarms.length; i++) {
+                for (var key in repeatingAlarms[i]) {
+                    if (col.indexOf(key) === -1) {
+                        col.push(key);
+                    }
+                }
+            }
+
+            var table = document.createElement("table");
+            table.classList.add("table");
+            var thead = table.createTHead();
+            thead.classList.add("thead-dark");
+            var tr = thead.insertRow(-1);
+            tr.classList.add("align-middle");
+
+            for (var i = 0; i < col.length; i++) {
+                var th = document.createElement("th");
+                th.innerHTML = col[i];
+                tr.appendChild(th);
+                thead.appendChild(tr);
+            }
+
+            for (var i = 0; i < repeatingAlarms.length; i++) {
+                tr = table.insertRow(-1);
+                for (var j = 0; j < col.length; j++) {
+                    var tabCell = tr.insertCell(-1);
+                    tabCell.innerHTML = repeatingAlarms[i][col[j]];
+                }
+            }
+
+            var divContainer = document.getElementById("alarmTable");
+            divContainer.innerHTML = "";
+            divContainer.appendChild(table);
+        }
     }
-    };
     xmlhttp.open("GET", "/json/alarm.json", true);
     xmlhttp.send();
-}
+};

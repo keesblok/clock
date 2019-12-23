@@ -34,6 +34,11 @@ td {
     background-image: linear-gradient(#0c5a66, #17A2B8);
 }
 
+.center {
+    display: block;
+    margin: 0 auto 15px;
+}
+
 #analog-clock {
     width: 100%;
     height: 100%;

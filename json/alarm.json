@@ -9,42 +9,42 @@
             "second": 0
         },
         {
-            "state": false,
+            "state": true,
             "weekDay": 2,
             "hour": 7,
-            "minute": 0,
+            "minute": 30,
             "second": 0
         },
         {
-            "state": false,
+            "state": true,
             "weekDay": 3,
             "hour": 7,
-            "minute": 0,
+            "minute": 30,
             "second": 0
         },
         {
-            "state": false,
+            "state": true,
             "weekDay": 4,
             "hour": 7,
-            "minute": 0,
+            "minute": 30,
             "second": 0
         },
         {
-            "state": false,
+            "state": true,
             "weekDay": 5,
             "hour": 7,
-            "minute": 0,
+            "minute": 30,
             "second": 0
         },
         {
-            "state": false,
+            "state": true,
             "weekDay": 6,
             "hour": 7,
-            "minute": 0,
+            "minute": 30,
             "second": 0
         },
         {
-            "state": false,
+            "state": true,
             "weekDay": 7,
             "hour": 7,
             "minute": 30,

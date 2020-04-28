@@ -37,7 +37,7 @@ function drawInnerRing(clock, radius) {
     }
 }
 
-function CreateTableFromJSON() {
+function createTableFromJSON() {
     var repeatingAlarms;
 
     var xmlhttp = new XMLHttpRequest();
@@ -56,6 +56,7 @@ function CreateTableFromJSON() {
             }
 
             var table = document.createElement("table");
+            table.id = "alarmTable"
             table.classList.add("table");
             var thead = table.createTHead();
             thead.classList.add("thead-dark");
@@ -77,11 +78,49 @@ function CreateTableFromJSON() {
                 }
             }
 
-            var divContainer = document.getElementById("alarmTable");
+            var divContainer = document.getElementById("alarmTablePlaceholder");
             divContainer.innerHTML = "";
             divContainer.appendChild(table);
+
+            var button = document.getElementById("GetSetAlarm");
+            button.setAttribute("onClick", "javascript: sendAlarmData();");
+            button.textContent = "Send alarm data";
         }
     }
     xmlhttp.open("GET", "/json/alarm.json", true);
     xmlhttp.send();
 };
+
+function createJSON() {
+    var table = document.getElementById("alarmTable");
+    var tableContent = [];
+    for (var i = 0; i < table.rows.length-1; i++) {
+        tableContent[i] = {};
+        for (var j = 0; j < table.rows[i].cells.length; j++) {
+            var columnName = table.rows[0].cells[j].innerHTML;
+            tableContent[i][columnName] = table.rows[i+1].cells[j].innerHTML;
+        }
+    }
+
+    var obj = {
+        "alarmOn": true,
+        "repeatingAlarms": tableContent
+    };
+
+    // return JSON.stringify(obj);  // Normal
+    return JSON.stringify(obj, null, 2); // Print pretty
+}
+
+function sendAlarmData() {
+    jsonString = createJSON();
+    
+    console.log(jsonString);
+    card3 = document.getElementById("card3-content");
+    card3.innerHTML = jsonString.replace(/\n/g, "<br>");
+
+    // var xmlhttp = new XMLHttpRequest();
+
+    // xmlhttp.open("POST", "/setAlarms");
+    // xmlhttp.setRequestHeader("Content-type", "application/json");
+    // xmlhttp.send(toSend);
+}

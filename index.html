@@ -7,11 +7,11 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/main.scss">
 
     <title>Clock</title>
   </head>
-  <body>
+  <body onload="getDataFromJSON();">
     <header class="gray-background">
         <div class="container">
             <h1>CLOCK</h1>
@@ -32,17 +32,13 @@
                 <div class="card">
                     <div class="card-header blue-background">
                         Alarms
-                        <div class="btn-group btn-group-toggle float-right" data-toggle="buttons">
-                            <label class="btn btn-secondary active">
-                                <input type="radio" name="options" id="AlarmOn" autocomplete="off" checked> ON
-                            </label>
-                            <label class="btn btn-secondary">
-                                <input type="radio" name="options" id="AlarmOff" autocomplete="off"> OFF
-                            </label>
-                        </div>
+                        <label class="float-right switch">
+                            <input id="alarmSwitch" type="checkbox">
+                            <span class="slider round"></span>
+                        </label>
                     </div>
                     <div class="card-body">
-                        <button type="button" onclick="createTableFromJSON()" class="btn btn-info center" id="GetSetAlarm">Get alarms</button>
+                        <button type="button" onclick="getDataFromJSON()" class="btn btn-info center" id="GetSetAlarm">Get alarms</button>
                         <div id="alarmTablePlaceholder"></div>
                     </div>
                 </div>

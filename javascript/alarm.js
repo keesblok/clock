@@ -37,14 +37,17 @@ function drawInnerRing(clock, radius) {
     }
 }
 
-function createTableFromJSON() {
+function getDataFromJSON() {
     var repeatingAlarms;
 
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             alarms = JSON.parse(this.responseText);
+            alarmOn = alarms["alarmOn"];
             repeatingAlarms = alarms["repeatingAlarms"];
+
+            document.getElementById("alarmSwitch").checked = alarmOn;
 
             var col = [];
             for (var i = 0; i < repeatingAlarms.length; i++) {
@@ -74,7 +77,12 @@ function createTableFromJSON() {
                 tr = table.insertRow(-1);
                 for (var j = 0; j < col.length; j++) {
                     var tabCell = tr.insertCell(-1);
-                    tabCell.innerHTML = repeatingAlarms[i][col[j]];
+                    //tabCell.innerHTML = repeatingAlarms[i][col[j]];
+                    var inputElement = document.createElement("INPUT");
+                    inputElement.setAttribute("type", "text");
+                    inputElement.required = true;
+                    inputElement.setAttribute("value", repeatingAlarms[i][col[j]]);
+                    tabCell.appendChild(inputElement);
                 }
             }
 
@@ -98,12 +106,13 @@ function createJSON() {
         tableContent[i] = {};
         for (var j = 0; j < table.rows[i].cells.length; j++) {
             var columnName = table.rows[0].cells[j].innerHTML;
-            tableContent[i][columnName] = table.rows[i+1].cells[j].innerHTML;
+            //tableContent[i][columnName] = table.rows[i+1].cells[j].innerHTML;
+            tableContent[i][columnName] = table.rows[i+1].cells[j].firstElementChild.value;
         }
     }
 
     var obj = {
-        "alarmOn": true,
+        "alarmOn": document.getElementById("alarmSwitch").checked,
         "repeatingAlarms": tableContent
     };
 

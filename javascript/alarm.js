@@ -92,7 +92,7 @@ function getDataFromJSON() {
 
             var button = document.getElementById("GetSetAlarm");
             button.setAttribute("onClick", "javascript: sendAlarmData();");
-            button.textContent = "Send alarm data";
+            button.textContent = "Update alarm data";
         }
     }
     xmlhttp.open("GET", "/json/alarm.json", true);
@@ -100,6 +100,8 @@ function getDataFromJSON() {
 };
 
 function createJSON() {
+    var error = "";
+
     var table = document.getElementById("alarmTable");
     var tableContent = [];
     for (var i = 0; i < table.rows.length-1; i++) {
@@ -108,6 +110,12 @@ function createJSON() {
             var columnName = table.rows[0].cells[j].innerHTML;
             //tableContent[i][columnName] = table.rows[i+1].cells[j].innerHTML;
             tableContent[i][columnName] = table.rows[i+1].cells[j].firstElementChild.value;
+            if (tableContent[i][columnName] == "") {
+                if (error != "") {
+                    error += "<br>"
+                }
+                error += "Empty fields are not allowed!"
+            }
         }
     }
 
@@ -116,20 +124,31 @@ function createJSON() {
         "repeatingAlarms": tableContent
     };
 
-    // return JSON.stringify(obj);  // Normal
-    return JSON.stringify(obj, null, 2); // Print pretty
-}
-
-function sendAlarmData() {
-    jsonString = createJSON();
-    
+    var jsonString = JSON.stringify(obj, null, 2);
     console.log(jsonString);
     card3 = document.getElementById("card3-content");
     card3.innerHTML = jsonString.replace(/\n/g, "<br>");
 
-    // var xmlhttp = new XMLHttpRequest();
+    return {
+        json: JSON.stringify(obj),
+        error: error
+    };
+    //return JSON.stringify(obj, null, 2); // Print pretty
+}
 
-    // xmlhttp.open("POST", "/setAlarms");
-    // xmlhttp.setRequestHeader("Content-type", "application/json");
-    // xmlhttp.send(toSend);
+function sendAlarmData() {
+    errorField = document.getElementById("errorPlaceholder");
+    errorField.innerHTML = "";
+
+    values = createJSON();
+    
+    if (values.error == "") {
+        var xmlhttp = new XMLHttpRequest();
+
+        xmlhttp.open("POST", "/setAlarms");
+        xmlhttp.setRequestHeader("Content-type", "application/json");
+        xmlhttp.send(values.json);
+    } else {
+        errorField.innerHTML = values.error;
+    }
 }
